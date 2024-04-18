@@ -14,9 +14,68 @@ datasource db {
 }
 
 model User {
-  id    String @id @default(uuid()) // use uuid for ids publicy exposed
-  name  String
-  email String @unique
+  id            String   @id @default(uuid()) // use uuid for ids publicy exposed
+  name          String
+  email         String   @unique
+  password_hash String
+  created_at    DateTime @default(now())
 
   @@map("users")
+}
+
+model Product {
+  id         String   @id @default(uuid())
+  name       String
+  price      Decimal
+  min_amount Int?
+  created_at DateTime @default(now())
+  Order      Order[]
+
+  @@map("products")
+}
+
+model Costumer {
+  id         String    @id @default(uuid())
+  name       String
+  email      String    @unique
+  register   Int
+  address    String
+  phone      String
+  created_at DateTime  @default(now())
+  updated_at DateTime?
+  Order      Order[]
+
+  @@map("costumers")
+}
+
+model Order {
+  id           String    @id @default(uuid())
+  is_delivery  Boolean
+  status       Status
+  form_payment Payment
+  total_value  Decimal
+  created_at   DateTime  @default(now())
+  updated_at   DateTime?
+
+  costumer   Costumer @relation(fields: [costumerId], references: [id])
+  costumerId String
+
+  product   Product @relation(fields: [productId], references: [id])
+  productId String
+
+  @@map("orders")
+}
+
+enum Status {
+  CREATED
+  WAITING
+  IN_PRODUCTION
+  WAITING_DELIVERY
+  FINISHED
+}
+
+enum Payment {
+  CASH
+  PIX
+  CREDIT_CARD
 }
