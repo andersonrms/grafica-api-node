@@ -1,3 +1,4 @@
+import { UserRepositoryProps } from '@/repositories/user-repository'
 import { hash } from 'bcrypt'
 
 interface RegisterServiceRequest {
@@ -13,12 +14,12 @@ export class UserService {
   } */
 
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  constructor(private userRepository: any) {}
+  constructor(private userRepository: UserRepositoryProps) {}
 
   async registerService({ email, name, password }: RegisterServiceRequest) {
     const passwordHash = await hash(password, 6)
 
-    const userAlreadyExists = await this.userRepository.findUniqueUser(email)
+    const userAlreadyExists = await this.userRepository.findByEmail(email)
 
     if (userAlreadyExists) throw new Error('')
 
