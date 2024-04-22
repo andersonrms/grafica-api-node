@@ -3,7 +3,7 @@ import { FastifyRequest, FastifyReply } from 'fastify'
 import { z } from 'zod'
 import { UserService } from '@/services/user-service'
 import { UserRepository } from '@/repositories/user-repository'
-import { UserAlreadyExistsError } from '@/errorHandler/user-erros'
+import { UserAlreadyExistsError } from '@/services/errors/user-erros'
 
 export async function register(request: FastifyRequest, reply: FastifyReply) {
   const createBodySchema = z.object({
@@ -23,7 +23,7 @@ export async function register(request: FastifyRequest, reply: FastifyReply) {
     if (err instanceof UserAlreadyExistsError)
       return reply.status(409).send({ error: err.message })
 
-    return reply.status(500).send('Internal Server Error')
+    throw err
   }
 
   return reply.status(201).send()
