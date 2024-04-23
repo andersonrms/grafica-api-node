@@ -3,7 +3,7 @@ import { FastifyRequest, FastifyReply } from 'fastify'
 import { z } from 'zod'
 import { UserService } from '@/services/user-service'
 import { UserRepository } from '@/repositories/user-repository'
-import { UserAlreadyExistsError } from '@/services/errors/user-erros'
+import { UserAlreadyExistsError } from '@/services/errors/user-errors'
 
 export async function register(request: FastifyRequest, reply: FastifyReply) {
   const createBodySchema = z.object({
