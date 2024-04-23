@@ -34,30 +34,33 @@ model Product {
   @@map("products")
 }
 
-model Costumer {
+model Customer {
   id         String    @id @default(uuid())
   name       String
   email      String    @unique
-  register   Int
+  document   String    @unique
   address    String
+  cep        String
+  uf         String
   phone      String
   created_at DateTime  @default(now())
   updated_at DateTime?
   Order      Order[]
 
-  @@map("costumers")
+  @@map("customers")
 }
 
 model Order {
   id           String    @id @default(uuid())
   is_delivery  Boolean
   status       Status
+  amount       Int
   form_payment Payment
   total_value  Decimal
   created_at   DateTime  @default(now())
   updated_at   DateTime?
 
-  costumer   Costumer @relation(fields: [costumerId], references: [id])
+  costumer   Customer @relation(fields: [costumerId], references: [id])
   costumerId String
 
   product   Product @relation(fields: [productId], references: [id])
