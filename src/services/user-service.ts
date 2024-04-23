@@ -14,7 +14,6 @@ export class UserService {
     this.userRepository = userRepository
   } */
 
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   constructor(private userRepository: UserRepositoryProps) {}
 
   async registerService({ email, name, password }: RegisterServiceRequest) {
