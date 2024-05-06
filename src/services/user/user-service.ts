@@ -1,6 +1,6 @@
 import { UserRepositoryProps } from '@/repositories/user-repository'
 import { hash } from 'bcrypt'
-import { UserAlreadyExistsError } from './errors/user-errors'
+import { UserAlreadyExistsError } from '../errors/user-errors'
 
 interface RegisterServiceRequest {
   name: string
